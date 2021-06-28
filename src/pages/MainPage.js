@@ -1,51 +1,37 @@
 import React from "react";
-import Header from "../Header";
-import Footer from "../Footer";
 import "../styles/MainPage.scss";
-import LoadingPage from "../pages/LoadingPage";
-import { loadComponent } from "../lib/utils";
+import GoogleLogin from "react-google-login";
 
 const MainPageBody = ({
-  errorGetExampleData,
-  errorPostExampleData,
-  exampleData,
-  loadingGetExampleData,
-  loadingPostExampleData,
-  postExampleData
 }) => {
+  const onLoginGoogle = (result) => {
+    console.log("google login success!");
+    console.log(result);
+  }
+  
   return (
     <>
       <div className="main-page-body-wrapper">
-        {loadComponent(
-          loadingGetExampleData,
-          <LoadingPage />,
-          <div />
-        )}
+        <GoogleLogin
+          clientId=''
+          render={(props) => (
+            <button onClick={props.onClick}>Google Login</button>
+          )}
+          onSuccess={result => onLoginGoogle(result)}
+          onFailure={result => console.log(result)}
+          cookiePolicy={'single_host_origin'}
+        />
       </div>
     </>
   );
-};
+}
 
 const MainPage = ({
-  errorGetExampleData,
-  errorPostExampleData,
-  exampleData,
-  loadingGetExampleData,
-  loadingPostExampleData,
-  postExampleData
 }) => {
   return (
     <div className="main-page-wrapper">
-      <Header />
       <MainPageBody
-        errorGetExampleData={errorGetExampleData}
-        errorPostExampleData={errorPostExampleData}
-        exampleData={exampleData}
-        loadingGetExampleData={loadingGetExampleData}
-        loadingPostExampleData={loadingPostExampleData}
-        postExampleData={postExampleData}
       />
-      <Footer />
     </div>
   );
 };
